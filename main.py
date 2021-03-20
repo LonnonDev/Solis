@@ -2,7 +2,6 @@ f = (open("text.sol", "r"))
 text = []
 for x in f:
 	text += [x]
-print(text)
 tokens = ["out", '"', "hen"]
 tokensdicc = {"out": "FUNC", '"': "STRING", "hen": "FUNC"}
 
@@ -20,7 +19,6 @@ def Lexer(text):
 	Lexed = []
 	while x != len(text):
 		check = ""
-		print(text[x])
 		for char in text[x]:
 			check += char
 			if check in tokens:
@@ -32,5 +30,18 @@ def Lexer(text):
 
 	return Lexed
 
+def Tokeninator(text):
+	x = 0
+	Tokeninated = []
+	while x != len(text):
+		Tokeninated += [dict({text[x]: tokensdicc[text[x]]})]
+		x += 1
+
+	return Tokeninated
+
+
+
 LexedVersion = Lexer(text)
-print(LexedVersion)
+TokinatedVersion = Tokeninator(LexedVersion)
+print("Lexed Version: ", LexedVersion)
+print("Tokinated Version: ", TokinatedVersion)
