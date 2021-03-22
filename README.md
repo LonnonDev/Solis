@@ -15,9 +15,9 @@ There is a Lexer and a Tokeninater
 Releases can be found here [Releases](https://github.com/LonnonDev/Solis/releases)
 
 # TODO #
-Add functionality
+Add functionality:
 - Make Functions work
-Add Datatypes
+Add Datatypes:
 - String, Integer, Decimal, Boolean
 Add Functions
 Add a Parser
