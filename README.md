@@ -10,3 +10,16 @@ There is a Lexer and a Tokeninater
   ## Tokeninator ##
   - The tokeninator takes the Lexed list and converts it into a list with lists in it saying what type of data is this
   - For example ```["out", '"', '"']``` would be ```[["out", "FUNC"], ['"', "STRING"], ['"', "STRING"]]```
+
+# Releases #
+Releases can be found here [Releases](https://github.com/LonnonDev/Solis/releases)
+
+# TODO #
+Add functionality
+- Make Functions work
+Add Datatypes
+- String, Integer, Decimal, Boolean
+Add Functions
+Add a Parser
+Make the Lexer and Tokeninator Better
+Select input file
