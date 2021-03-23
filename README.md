@@ -14,13 +14,3 @@ There is a Lexer and a Tokeninater
 
 # Releases #
 Releases can be found here [Releases](https://github.com/LonnonDev/Solis/releases)
-
-# TODO #
-Add functionality:
-- Make Functions work
-Add Datatypes:
-- String, Integer, Decimal, Boolean
-Add Functions
-Add a Parser
-Make the Lexer and Tokeninator Better
-Select input file
