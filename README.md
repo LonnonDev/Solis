@@ -6,7 +6,7 @@ Solis is a programming language made for fun in Python.
   </a>
 
 # Features #
-There is a Lexer and a Tokeninater
+There is a Lexer and a Tokeninator
 
   ## Lexer ##
   - The lexer makes it so that it can process the code and put it into a list and then you can pass it to the tokeninator
