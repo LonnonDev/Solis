@@ -1,4 +1,5 @@
-:start
-python3 main.py
-pause
-goto start
+Start () {
+  python3 main.py
+  pause
+}
+Start
