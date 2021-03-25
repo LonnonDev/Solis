@@ -18,4 +18,4 @@ There is a Lexer and a Parser
 
 ## Parser ##
   - The parser looks at the Tokenized List and does operation and runs functions.
-  - For example ```[["out", "FUNC"], ['"', "STRING"], ["Hello, World!", "STRING"] ['"', "STRING"]]``` would print ```Hello, World!"
+  - For example ```[["out", "FUNC"], ['"', "STRING"], ["Hello, World!", "STRING"] ['"', "STRING"]]``` would print ```Hello, World!"```
