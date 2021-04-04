@@ -1,3 +1,5 @@
+import parser
+
 f = (open("text.sol", "r"))
 text = []
 for iterate in f:
@@ -26,14 +28,10 @@ def Lexer(text):
 			elif char in tokens:
 				Lexed += [char]
 		iterate += 1
-
-	return Lexed
-
-def Tokeninator(text):
 	iterate = 0
 	Tokeninated = []
-	while iterate != len(text):
-		Tokeninated += [[text[iterate], tokensdicc[text[iterate]]]]
+	while iterate != len(Lexed):
+		Tokeninated += [[Lexed[iterate], tokensdicc[Lexed[iterate]]]]
 		iterate += 1
 
 	return Tokeninated
@@ -54,8 +52,5 @@ def Parser(text):
 
 
 LexedVersion = Lexer(text)
-TokeninatedVersion = Tokeninator(LexedVersion)
 print("Lexed Version: ", LexedVersion)
-print("Tokinated Version: ", TokeninatedVersion)
-ParsedVersion = Parser(TokeninatedVersion)
 #print("Parsed Version: ", ParsedVersion)
