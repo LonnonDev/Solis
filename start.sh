@@ -6,7 +6,6 @@ pause () {
 }
 
 Start () {
-  echo "Hello"
   pause
   Start
 }

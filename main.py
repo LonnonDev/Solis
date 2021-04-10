@@ -1,11 +1,10 @@
-import parser
 
 f = (open("text.sol", "r"))
 text = []
 for iterate in f:
 	text += [iterate]
-tokens = ["out", '"', "hen"]
-tokensdicc = {"out": "FUNC", '"': "STRING", "hen": "FUNC"}
+tokens = ["out", '"', "outln", "lnout"]
+tokensdicc = {"out": "FUNC", '"': "STRING", "outln": "FUNC", "lnout": "FUNC"}
 
 def pairs(o):
     if isinstance(o,dict):
@@ -23,34 +22,58 @@ def Lexer(text):
 		for char in text[iterate]:
 			check += char
 			if check in tokens:
-				Lexed += [check]
-				check = ""
+				if check == "out":
+					if text[iterate][0:5] == "outln":
+						Lexed += ["outln"]
+						check = ""
+					else:
+						Lexed += [check]
+						check = ""
+				else:
+					Lexed += [check]
+					check = ""
 			elif char in tokens:
-				Lexed += [char]
+				if char == '"' and Lexed[-1] == '"':
+					Lexed += [check[:-1]]
+					Lexed += [char]
+					check = ""
+				else:
+					Lexed += [char]
+					check = ""
 		iterate += 1
 	iterate = 0
-	Tokeninated = []
+	Tokenized = []
 	while iterate != len(Lexed):
-		Tokeninated += [[Lexed[iterate], tokensdicc[Lexed[iterate]]]]
+		try:
+			Tokenized += [[Lexed[iterate], tokensdicc[Lexed[iterate]]]]
+		except:
+			Tokenized += [[Lexed[iterate], "STRING"]]
 		iterate += 1
 
-	return Tokeninated
+	return Tokenized
 
 def outFUNC(text):
-	print(text)
+	print(text, end='')
+def outlnFUNC(text):
+	print(text, end='\n')
+def lnoutFUNC(text):
+	print(f"\n{text}", end='')
 
 def Parser(text):
 	iterate = 0
 	while iterate != len(text):
+		if text[iterate][0] == "out" and text[iterate][1] == "FUNC":
+			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
+				outFUNC(text[iterate+2][0])
+		elif text[iterate][0] == "outln" and text[iterate][1] == "FUNC":
+			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
+				outlnFUNC(text[iterate+2][0])
+		elif text[iterate][0] == "lnout" and text[iterate][1] == "FUNC":
+			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
+				lnoutFUNC(text[iterate+2][0])
 		iterate += 1
-		iterateplusone = iterate + 1
-		iterateminusone = iterate - 1
-		if text[iterateminusone][0] == "out" and text[iterateminusone][1] == "FUNC":
-			if text[iterate][1] == "STRING" and text[iterateplusone][1] == "STRING":
-				print("yes")
-	return "hi"
 
 
 LexedVersion = Lexer(text)
 print("Lexed Version: ", LexedVersion)
-#print("Parsed Version: ", ParsedVersion)
+Parser(LexedVersion)
