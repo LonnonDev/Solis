@@ -1,5 +1,5 @@
 # Solis #
-Solis is a programming language made for fun in Python.
+Solis is an Object Oriented programming language made for fun in Python.
 
 Releases [Here.](https://github.com/LonnonDev/Solis/releases)
   
