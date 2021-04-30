@@ -1,11 +1,15 @@
 import sys
+import msvcrt as m
 
-f = (open(str(sys.argv[1]), "r"))
+try:
+	f = (open(str(sys.argv[1]), "r"))
+except:
+	f = open("text.sol", "r")
 text = []
 for iterate in f:
 	text += [iterate]
-tokens = ["out", '"', "outln", "lnout"]
-tokensdicc = {"out": "FUNC", '"': "STRING", "outln": "FUNC", "lnout": "FUNC"}
+tokens = ["out", '"', "outln", "vent"]
+tokensdicc = {"out": "FUNC", '"': "STRING", "outln": "FUNC", "vent": "FUNC"}
 
 #* Pairs function from lua
 def pairs(o):
@@ -16,7 +20,7 @@ def pairs(o):
 
 #$#################################################################
 #$																  #
-#$							Lexer         						  #
+#$							  Lexer       						  #
 #$																  #
 #$#################################################################
 
@@ -68,11 +72,20 @@ def Lexer(text):
 #$#################################################################
 
 def outFUNC(text):
-	print(text, end='')
+	text = text.replace("\\n", "\n")
+	print(f"{text}", end='')
 def outlnFUNC(text):
-	print(text, end='\n')
-def lnoutFUNC(text):
-	print(f"\n{text}", end='')
+	text = text.replace("\\n", "\n")
+	print(f"{text}", end='\n')
+def vent():
+	try:
+		def wait():
+			m.getch()
+		print("\n\nPress any key to continue...")
+		wait()
+	except:
+		os.system('read -s -n 1 -p "Press any key to continue..."')
+	exit()
 
 #$#################################################################
 #$																  #
@@ -90,14 +103,12 @@ def Parser(text):
 		elif text[iterate][0] == "outln" and text[iterate][1] == "FUNC":
 			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
 				outlnFUNC(text[iterate+2][0])
-		elif text[iterate][0] == "lnout" and text[iterate][1] == "FUNC":
-			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
-				lnoutFUNC(text[iterate+2][0])
+		elif text[iterate][0] == "vent" and text[iterate][1] == "FUNC":
+			vent()
 		iterate += 1
 
 
 LexedVersion = Lexer(text)
-print("Lexed Version: ", LexedVersion)
 Parser(LexedVersion)
 try:
 	import msvcrt as m

@@ -1,5 +1,2 @@
-outln "gaming"
-outln "gaming"
-lnout "gaming"
-outln "gaming"
-out "gaming"
+outln "hello"
+out "hello\nhi"
