@@ -1,0 +1,5 @@
+outln "gaming"
+outln "gaming"
+lnout "gaming"
+outln "gaming"
+out "gaming"

@@ -1,17 +1,26 @@
+import sys
 
-f = (open("text.sol", "r"))
+f = (open(str(sys.argv[1]), "r"))
 text = []
 for iterate in f:
 	text += [iterate]
 tokens = ["out", '"', "outln", "lnout"]
 tokensdicc = {"out": "FUNC", '"': "STRING", "outln": "FUNC", "lnout": "FUNC"}
 
+#* Pairs function from lua
 def pairs(o):
     if isinstance(o,dict):
         return o.items()
     else:
         return enumerate(o)
 
+#$#################################################################
+#$																  #
+#$							Lexer         						  #
+#$																  #
+#$#################################################################
+
+#* This turns the code into a Lexed List that the Parser can understand and run
 def Lexer(text):
 	for i, index in pairs(text):
 		text[i] = text[i].rstrip("\n")
@@ -52,6 +61,12 @@ def Lexer(text):
 
 	return Tokenized
 
+#$#################################################################
+#$																  #
+#$						Built In Functions						  #
+#$																  #
+#$#################################################################
+
 def outFUNC(text):
 	print(text, end='')
 def outlnFUNC(text):
@@ -59,6 +74,13 @@ def outlnFUNC(text):
 def lnoutFUNC(text):
 	print(f"\n{text}", end='')
 
+#$#################################################################
+#$																  #
+#$							  Parser    						  #
+#$																  #
+#$#################################################################
+
+#* This checks the Lexed code and parses it and runs it 
 def Parser(text):
 	iterate = 0
 	while iterate != len(text):
@@ -77,3 +99,11 @@ def Parser(text):
 LexedVersion = Lexer(text)
 print("Lexed Version: ", LexedVersion)
 Parser(LexedVersion)
+try:
+	import msvcrt as m
+	def wait():
+		m.getch()
+	print("\n\nPress any key to continue...")
+	wait()
+except:
+	os.system('read -s -n 1 -p "Press any key to continue..."')
