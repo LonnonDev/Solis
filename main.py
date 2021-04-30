@@ -1,5 +1,6 @@
 import sys
 import msvcrt as m
+import time
 
 try:
 	f = (open(str(sys.argv[1]), "r"))
@@ -8,8 +9,25 @@ except:
 text = []
 for iterate in f:
 	text += [iterate]
-tokens = ["out", '"', "outln", "vent"]
-tokensdicc = {"out": "FUNC", '"': "STRING", "outln": "FUNC", "vent": "FUNC"}
+tokens = [
+	"out", 
+	'"', 
+	"outln",
+	"vent", 
+	"var", 
+	"=", 
+	"|"
+]
+tokensdicc = {
+	"out": "FUNC", 
+	'"': "STRING", 
+	"outln": "FUNC", 
+	"vent": "FUNC", 
+	"var": "DECLARE", 
+	"=": "ASSIGNMENT", 
+	"|": "VARUSE"
+}
+storedvars = {}
 
 #* Pairs function from lua
 def pairs(o):
@@ -18,11 +36,11 @@ def pairs(o):
     else:
         return enumerate(o)
 
-#$#################################################################
-#$																  #
-#$							  Lexer       						  #
-#$																  #
-#$#################################################################
+#-----------------------------------------------------------------|
+#-                                                                |
+#-                           Parser                               |
+#-                                                                |
+#-----------------------------------------------------------------|
 
 #* This turns the code into a Lexed List that the Parser can understand and run
 def Lexer(text):
@@ -46,37 +64,65 @@ def Lexer(text):
 					Lexed += [check]
 					check = ""
 			elif char in tokens:
+				#_ This gets the value inside of the of the Quotes
 				if char == '"' and Lexed[-1] == '"':
-					Lexed += [check[:-1]]
-					Lexed += [char]
+					Lexed += [f"{check[:-1]}/S"]
+					Lexed += [f"{char}"]
 					check = ""
+				#_ Get's the inline var, var name
+				elif char == '|' and Lexed[-1] == '|':
+					Lexed += [f"{check[:-1]}/V"]
+					Lexed += [f"{char}"]
+					check = ""
+				#_ Get Assignment operator and name of the var
+				elif char == "=":
+					Final = check
+					Final == Final[:-3]
+					Final = Final.replace(" ", "")
+					Final = Final.split("=")
+					Final[1] = "="
+					Lexed += Final
+					check = ""	
 				else:
 					Lexed += [char]
 					check = ""
 		iterate += 1
+	print(Lexed)
 	iterate = 0
 	Tokenized = []
 	while iterate != len(Lexed):
 		try:
 			Tokenized += [[Lexed[iterate], tokensdicc[Lexed[iterate]]]]
 		except:
-			Tokenized += [[Lexed[iterate], "STRING"]]
+			LexedEnd = Lexed[iterate][-2:]
+			if LexedEnd == "/S":
+				Final = Lexed[iterate]
+				Final = Final[:-2]
+				Tokenized += [[Final, "STRING"]]
+			elif LexedEnd == "/V":
+				Final = Lexed[iterate]
+				Final = Final[:-2]
+				Tokenized += [[Final, "VAR"]]
+			elif Lexed[iterate-1] == "var":
+				Tokenized += [[Lexed[iterate], "VARNAME"]]
 		iterate += 1
-
 	return Tokenized
 
-#$#################################################################
-#$																  #
-#$						Built In Functions						  #
-#$																  #
-#$#################################################################
+#-----------------------------------------------------------------|
+#-                                                                |
+#-                      Built in Functions                        |
+#-                                                                |
+#-----------------------------------------------------------------|
 
+#& Prints text without a newline
 def outFUNC(text):
 	text = text.replace("\\n", "\n")
 	print(f"{text}", end='')
+#& Prints text with a new line at the end
 def outlnFUNC(text):
 	text = text.replace("\\n", "\n")
 	print(f"{text}", end='\n')
+#& Exits the program
 def vent():
 	try:
 		def wait():
@@ -87,34 +133,43 @@ def vent():
 		os.system('read -s -n 1 -p "Press any key to continue..."')
 	exit()
 
-#$#################################################################
-#$																  #
-#$							  Parser    						  #
-#$																  #
-#$#################################################################
+#-----------------------------------------------------------------|
+#-                                                                |
+#-                           Parser                               |
+#-                                                                |
+#-----------------------------------------------------------------|
 
 #* This checks the Lexed code and parses it and runs it 
 def Parser(text):
 	iterate = 0
 	while iterate != len(text):
+		#_ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][0] == "out" and text[iterate][1] == "FUNC":
 			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
 				outFUNC(text[iterate+2][0])
+		#_ Look for the word outln and make sure it has the type of FUNC
 		elif text[iterate][0] == "outln" and text[iterate][1] == "FUNC":
 			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
 				outlnFUNC(text[iterate+2][0])
+		#_ Look for the word vent and make sure it has the type of FUNC
 		elif text[iterate][0] == "vent" and text[iterate][1] == "FUNC":
 			vent()
+		#_ Look for the word var and make sure it has the type of DECLARE
+		elif text[iterate][0] == "var" and text[iterate][1] == "DECLARE":
+			print()
 		iterate += 1
 
 
 LexedVersion = Lexer(text)
+print(LexedVersion)
+print(storedvars)
 Parser(LexedVersion)
-try:
+#time.sleep(10)
+"""try:
 	import msvcrt as m
 	def wait():
 		m.getch()
 	print("\n\nPress any key to continue...")
 	wait()
 except:
-	os.system('read -s -n 1 -p "Press any key to continue..."')
+	os.system('read -s -n 1 -p "Press any key to continue..."')"""

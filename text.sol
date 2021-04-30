@@ -1,2 +1,2 @@
-outln "hello"
-out "hello\nhi"
+var yourmom = "hello"
+outln |yourmom|
