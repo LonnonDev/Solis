@@ -87,7 +87,10 @@ def Lexer(text):
 					Lexed += [char]
 					check = ""
 		iterate += 1
-	print(Lexed)
+	return Lexed
+
+#* This tokenizes to make it understandable for the Parser
+def Tokinzier(Lexed):
 	iterate = 0
 	Tokenized = []
 	while iterate != len(Lexed):
@@ -107,6 +110,7 @@ def Lexer(text):
 				Tokenized += [[Lexed[iterate], "VARNAME"]]
 		iterate += 1
 	return Tokenized
+	
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -144,14 +148,12 @@ def Parser(text):
 	iterate = 0
 	while iterate != len(text):
 		#_ Look for the word out and make sure it has the type of FUNC
-		if text[iterate][0] == "out" and text[iterate][1] == "FUNC":
+		if text[iterate][1] == "FUNC":
 			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
-				outFUNC(text[iterate+2][0])
-		#_ Look for the word outln and make sure it has the type of FUNC
-		elif text[iterate][0] == "outln" and text[iterate][1] == "FUNC":
-			if text[iterate+1][1] == "STRING" and text[iterate+2][1] == "STRING" and text[iterate+3][1] == "STRING":
-				outlnFUNC(text[iterate+2][0])
-		#_ Look for the word vent and make sure it has the type of FUNC
+				if text[iterate][0] == "out":
+					outFUNC(text[iterate+2][0])
+				elif text[iterate][0] == "outln":
+					outlnFUNC(text[iterate+2][0])
 		elif text[iterate][0] == "vent" and text[iterate][1] == "FUNC":
 			vent()
 		#_ Look for the word var and make sure it has the type of DECLARE
@@ -159,11 +161,15 @@ def Parser(text):
 			print()
 		iterate += 1
 
+#-----------------------------------------------------------------|
+#-                                                                |
+#-                        Run The Code                            |
+#-                                                                |
+#-----------------------------------------------------------------|
 
 LexedVersion = Lexer(text)
-print(LexedVersion)
-print(storedvars)
-Parser(LexedVersion)
+Tokinzied = Lexer(LexedVersion)
+Parser(Tokinzied)
 #time.sleep(10)
 try:
 	def wait():
