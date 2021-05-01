@@ -166,7 +166,6 @@ print(storedvars)
 Parser(LexedVersion)
 #time.sleep(10)
 """try:
-	import msvcrt as m
 	def wait():
 		m.getch()
 	print("\n\nPress any key to continue...")
