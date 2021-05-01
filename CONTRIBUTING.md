@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-## The Don'ts ##
+## The Dont's ##
 - Do not contribute something that would destroy others work or make it worse.
 - Do not contribute something that removes features that were working as intended or that are required.
 - Do not contribute something that has not been tested.
