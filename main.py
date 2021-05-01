@@ -38,7 +38,7 @@ def pairs(o):
 
 #-----------------------------------------------------------------|
 #-                                                                |
-#-                           Parser                               |
+#-                           Lexer                                |
 #-                                                                |
 #-----------------------------------------------------------------|
 
@@ -165,10 +165,10 @@ print(LexedVersion)
 print(storedvars)
 Parser(LexedVersion)
 #time.sleep(10)
-"""try:
+try:
 	def wait():
 		m.getch()
 	print("\n\nPress any key to continue...")
 	wait()
 except:
-	os.system('read -s -n 1 -p "Press any key to continue..."')"""
+	os.system('read -s -n 1 -p "Press any key to continue..."')
