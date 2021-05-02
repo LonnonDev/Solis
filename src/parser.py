@@ -20,7 +20,7 @@ def Parser(text):
 						outlnFUNC(text[iterate+1][0])
 				elif text[iterate+1][1] == "STRING" and text[iterate+1][0] == '"':
 					print(f"""\rToo Little or Too many \"'s at 
-	{text[iterate][0]} {text[iterate+1][0]}\n""")
+{text[iterate][0]} {text[iterate+1][0]}\n""")
 			except:
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
