@@ -1,3 +1,3 @@
-var yourmom = "hello"
-outln """
-outln |yourmom|
+var urmom = "test"
+out "test"
+vent

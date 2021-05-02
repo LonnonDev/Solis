@@ -3,7 +3,7 @@ tokens = [
 	'"',
 	"outln",
 	"vent",
-	"var",
+	"var ",
 	"=",
 	"|"
 ]
@@ -12,7 +12,7 @@ tokensdict = {
 	'"': "STRING",
 	"outln": "FUNC",
 	"vent": "FUNC",
-	"var": "DECLARE",
+	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
 	"|": "VARUSE"
 }

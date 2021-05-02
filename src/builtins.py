@@ -1,3 +1,6 @@
+import sys
+import msvcrt as m
+import time
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -17,11 +20,7 @@ def outlnFUNC(text):
     
 #& Exits the program
 def vent():
-	try:
-		def wait():
-			m.getch()
-		print("\n\nPress any key to continue...")
-		wait()
-	except:
-		os.system('read -s -n 1 -p "Press any key to continue..."')
 	exit()
+
+def declarevar(var):
+	print()

@@ -4,6 +4,7 @@ import time
 
 from src.lexer import Lexer
 from src.parser import Parser
+from onoff import toggle
 
 try:
 	f = (open(str(sys.argv[1]), "r"))
@@ -24,10 +25,11 @@ LexedVersion = Lexer(text)
 print(LexedVersion)
 Parser(LexedVersion)
 #time.sleep(10)
-"""try:
-	def wait():
-		m.getch()
-	print("\n\nPress any key to continue...")
-	wait()
-except:
-	os.system('read -s -n 1 -p "Press any key to continue..."')"""
+if toggle == True:
+	try:
+		def wait():
+			m.getch()
+		print("\nPress any key to continue...")
+		wait()
+	except:
+		os.system('read -s -n 1 -p "Press any key to continue..."')
