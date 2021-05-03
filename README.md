@@ -1,5 +1,10 @@
 # Solis #
-Solis is an Planning to be a Statically Typed Interpreted Language that is also Object Oriented which is made entierly for fun in Python.
+Solis is a Programming Language which Type is being Thought of
+## Current Ideas ##
+- Object Oriented
+- Lazy Evaluation
+- Statically Typed
+- Interpreted
 
 Releases [Here.](https://github.com/LonnonDev/Solis/releases)
   
