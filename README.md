@@ -8,8 +8,6 @@ Releases [Here.](https://github.com/LonnonDev/Solis/releases)
   </a>
 
 # Features #
-There is a Lexer and a Parser
-
 ## Variables ##
 Variables can be declared like this
 ```
