@@ -1,5 +1,6 @@
 /build
 /dist
+dist.zip
 *.zip
 *.manifest
 *.toc
@@ -7,5 +8,7 @@
 *.pyc
 *.html
 *.exe
+*.pyc
+__pycache__/main.cpython-39.pyc
 *.pyc
 __pycache__/main.cpython-39.pyc

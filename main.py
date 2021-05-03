@@ -2,7 +2,7 @@ import sys
 import msvcrt as m
 import time
 
-from src.lexer import Lexer
+from src.lexer import Tokenize
 from src.parser import Parser
 from onoff import toggle
 
@@ -21,7 +21,7 @@ storedvars = {}
 #-                                                                |
 #-----------------------------------------------------------------|
 
-LexedVersion = Lexer(text)
+LexedVersion = Tokenize(text)
 print(LexedVersion)
 Parser(LexedVersion)
 #time.sleep(10)

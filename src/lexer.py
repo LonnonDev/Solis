@@ -14,12 +14,12 @@ def pairs(o):
 #-                                                                |
 #-----------------------------------------------------------------|
 
-#* This turns the code into a Lexed List that the Parser can understand and run
-def Lexer(text):
+#* This turns the code into a Tokenized List and then Turns that into a Lexed List that the Parser can understand and run
+def Tokenize(text):
 	for i, index in pairs(text):
 		text[i] = text[i].rstrip("\n")
 	iterate = 0
-	Lexed = []
+	Tokenized = []
 	while iterate != len(text):
 		check = ""
 		for char in text[iterate]:
@@ -27,24 +27,24 @@ def Lexer(text):
 			if check in tokens:
 				if check == "out":
 					if text[iterate][0:5] == "outln":
-						Lexed += ["outln"]
+						Tokenized += ["outln"]
 						check = ""
 					else:
-						Lexed += [check]
+						Tokenized += [check]
 						check = ""
 				else:
-					Lexed += [check]
+					Tokenized += [check]
 					check = ""
 			elif char in tokens:
 				#_ This gets the value inside of the of the Quotes
-				if char == '"' and Lexed[-1] == '"':
-					Lexed[-1] = ""
-					Lexed += [f"{check[:-1]}/S"]
+				if char == '"' and Tokenized[-1] == '"':
+					Tokenized[-1] = ""
+					Tokenized += [f"{check[:-1]}/S"]
 					check = ""
 				#_ Get's the inline var, var name
-				elif char == '|' and Lexed[-1] == '|':
-					Lexed[-1] = ""
-					Lexed += [f"{check[:-1]}/V"]
+				elif char == '|' and Tokenized[-1] == '|':
+					Tokenized[-1] = ""
+					Tokenized += [f"{check[:-1]}/V"]
 					check = ""
 				#_ Get Assignment operator and name of the var
 				elif char == "=":
@@ -53,38 +53,38 @@ def Lexer(text):
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
-					Lexed += [f"{Final[0]}/D"]
-					Lexed += Final[1]
+					Tokenized += [f"{Final[0]}/D"]
+					Tokenized += Final[1]
 					check = ""
 				else:
-					Lexed += [char]
+					Tokenized += [char]
 					check = ""
 		iterate += 1
-	Tokenizied = Tokinzier(Lexed)
-	return Tokenizied
+	Lexed = Lex(Tokenized)
+	return Lexed
 
-#* This tokenizes to make it understandable for the Parser
-def Tokinzier(Lexed):
+#* This Lexes the Tokenized list to make it understandable for the Parser
+def Lex(Tokenizied):
 	iterate = 0
 	Tokenized = []
-	while iterate != len(Lexed):
+	while iterate != len(Tokenizied):
 		try:
-			if Lexed[iterate] == "var ":
+			if Tokenizied[iterate] == "var ":
 				Tokenized += [["var", tokensdict["var "]]]
 			else:
-				Tokenized += [[Lexed[iterate], tokensdict[Lexed[iterate]]]]
+				Tokenized += [[Tokenizied[iterate], tokensdict[Tokenizied[iterate]]]]
 		except:
-			LexedEnd = Lexed[iterate][-2:]
-			if LexedEnd == "/S":
-				Final = Lexed[iterate]
+			TokeniziedEnd = Tokenizied[iterate][-2:]
+			if TokeniziedEnd == "/S":
+				Final = Tokenizied[iterate]
 				Final = Final[:-2]
 				Tokenized += [[Final, "STRING"]]
-			elif LexedEnd == "/V":
-				Final = Lexed[iterate]
+			elif TokeniziedEnd == "/V":
+				Final = Tokenizied[iterate]
 				Final = Final[:-2]
 				Tokenized += [[Final, "VAR"]]
-			elif LexedEnd == "/D":
-				Final = Lexed[iterate]
+			elif TokeniziedEnd == "/D":
+				Final = Tokenizied[iterate]
 				Final = Final[:-2]
 				Tokenized += [[Final, "VARNAME"]]
 		iterate += 1
