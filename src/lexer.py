@@ -53,7 +53,8 @@ def Lexer(text):
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
-					Lexed += Final
+					Lexed += [f"{Final[0]}/D"]
+					Lexed += Final[1]
 					check = ""
 				else:
 					Lexed += [char]
@@ -68,7 +69,10 @@ def Tokinzier(Lexed):
 	Tokenized = []
 	while iterate != len(Lexed):
 		try:
-			Tokenized += [[Lexed[iterate], tokensdict[Lexed[iterate]]]]
+			if Lexed[iterate] == "var ":
+				Tokenized += [["var", tokensdict["var "]]]
+			else:
+				Tokenized += [[Lexed[iterate], tokensdict[Lexed[iterate]]]]
 		except:
 			LexedEnd = Lexed[iterate][-2:]
 			if LexedEnd == "/S":
@@ -79,7 +83,9 @@ def Tokinzier(Lexed):
 				Final = Lexed[iterate]
 				Final = Final[:-2]
 				Tokenized += [[Final, "VAR"]]
-			elif Lexed[iterate-1] == "var":
-				Tokenized += [[Lexed[iterate], "VARNAME"]]
+			elif LexedEnd == "/D":
+				Final = Lexed[iterate]
+				Final = Final[:-2]
+				Tokenized += [[Final, "VARNAME"]]
 		iterate += 1
 	return Tokenized

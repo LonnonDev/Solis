@@ -25,7 +25,7 @@ def Parser(text):
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
 			if text[iterate][0] == "vent":
-				vent()
+				exit()
 		#_ Look for the word var and make sure it has the type of DECLARE
 		elif text[iterate][0] == "var" and text[iterate][1] == "DECLARE":
 			print(text[iterate])
