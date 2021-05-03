@@ -74,7 +74,6 @@ def Tokenize(text):
 def Lex(Tokenized):
 	iterate = 0
 	Lexed = []
-	print(Tokenized)
 	while iterate != len(Tokenized):
 		try:
 			if Tokenized[iterate][0] == "var ":
