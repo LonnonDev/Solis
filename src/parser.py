@@ -26,7 +26,7 @@ def Parser(text):
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
 			if text[iterate][0] == "vent":
-				exit()
+				break
 		iterate += 1
 
 def ConvertVars(lexed):
