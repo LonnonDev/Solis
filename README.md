@@ -21,6 +21,8 @@ and used like this
 The current types are 
 - String
   - ```"<data>"```
+- Integer (No Floating Point Value)
+  - ```<Any Number wihtout a Decimal```
 ## Printing ##
 outln prints with a newline after, takes arg string
 
