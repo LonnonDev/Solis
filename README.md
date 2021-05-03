@@ -13,6 +13,8 @@ Variables can be declared like this
 ```
 var <name> = <value>
 ```
+and used like this
+```|<varname>|```
 ## Types ##
 The current types are 
 - String
