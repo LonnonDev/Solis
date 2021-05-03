@@ -9,6 +9,8 @@ from src.builtins import *
 #* This checks the Lexed code and parses it and runs it
 def Parser(text):
 	iterate = 0
+	text = ConvertVars(text)
+	print(text)
 	while iterate != len(text):
 		#_ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
@@ -26,8 +28,18 @@ def Parser(text):
 			#_ Look for the word vent and make sure it has the type of FUNC
 			if text[iterate][0] == "vent":
 				exit()
-		#_ Look for the word var and make sure it has the type of DECLARE
-		elif text[iterate][0] == "var" and text[iterate][1] == "DECLARE":
-			print(text[iterate])
-			declarevar(text[iterate])
 		iterate += 1
+
+def ConvertVars(lexed):
+	storedvars = {}
+	iterate = 0
+	while iterate != len(lexed):
+		if not storedvars:
+			storedvars = {}
+		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
+			newdict = {lexed[iterate+1][0]: [lexed[iterate+3][0], lexed[iterate+3][1]]}
+			storedvars = {**storedvars, **newdict}
+		elif lexed[iterate][1] == "VAR":
+			lexed[iterate] = storedvars[lexed[iterate][0]]
+		iterate += 1
+	return lexed

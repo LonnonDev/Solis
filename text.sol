@@ -1,3 +1,3 @@
-var urmom = "test"
-out "test"
+var urmom = "Hello"
+out |urmom|
 vent

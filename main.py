@@ -13,7 +13,6 @@ except:
 text = []
 for iterate in f:
 	text += [iterate]
-storedvars = {}
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -22,7 +21,6 @@ storedvars = {}
 #-----------------------------------------------------------------|
 
 LexedVersion = Tokenize(text)
-print(LexedVersion)
 Parser(LexedVersion)
 #time.sleep(10)
 if toggle == True:
