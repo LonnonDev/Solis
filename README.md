@@ -2,6 +2,7 @@
   <a href="https://github.com/LonnonDev/Solis/issues">
     <img alt="contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat">
   </a>
+  
 Solis is a Programming Language which Type is being Thought of
 ## Current Ideas ##
 - Object Oriented
