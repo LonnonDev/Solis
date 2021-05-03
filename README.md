@@ -21,4 +21,5 @@ The current types are
   - ```"<data>"```
 ## Printing ##
 outln prints with a newline after, takes arg string
+
 out prints without a newline after, takes arg string
