@@ -1,4 +1,5 @@
 from src.tokens import tokens, tokensdict
+numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 #* Pairs function from lua
 def pairs(o):
@@ -22,29 +23,30 @@ def Tokenize(text):
 	Tokenized = []
 	while iterate != len(text):
 		check = ""
+		line = 1
 		for char in text[iterate]:
 			check += char
 			if check in tokens:
 				if check == "out":
 					if text[iterate][0:5] == "outln":
-						Tokenized += ["outln"]
+						Tokenized += [["outln", line]]
 						check = ""
 					else:
-						Tokenized += [check]
+						Tokenized += [[check, line]]
 						check = ""
 				else:
-					Tokenized += [check]
+					Tokenized += [[check, line]]
 					check = ""
 			elif char in tokens:
 				#_ This gets the value inside of the of the Quotes
-				if char == '"' and Tokenized[-1] == '"':
-					Tokenized[-1] = ""
-					Tokenized += [f"{check[:-1]}/S"]
+				if char == '"' and Tokenized[-1][0] == '"':
+					Tokenized.pop(-1)
+					Tokenized += [[f"{check[:-1]}/S", line]]
 					check = ""
 				#_ Get's the inline var, var name
-				elif char == '|' and Tokenized[-1] == '|':
-					Tokenized[-1] = ""
-					Tokenized += [f"{check[:-1]}/V"]
+				elif char == '|' and Tokenized[-1][0] == '|':
+					Tokenized.pop(-1)
+					Tokenized += [[f"{check[:-1]}/V", line]]
 					check = ""
 				#_ Get Assignment operator and name of the var
 				elif char == "=":
@@ -53,39 +55,49 @@ def Tokenize(text):
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
-					Tokenized += [f"{Final[0]}/D"]
-					Tokenized += Final[1]
+					Tokenized += [[f"{Final[0]}/D", line]]
+					Tokenized += [[Final[1], line]]
 					check = ""
 				else:
-					Tokenized += [char]
+					Tokenized += [[char, line]]
 					check = ""
+			elif char in numbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
+				Tokenized += [[f"{char}/N", line]]
+			elif check == "\\n":
+				line += 1
 		iterate += 1
 	Lexed = Lex(Tokenized)
+	print(Lexed)
 	return Lexed
 
 #* This Lexes the Tokenized list to make it understandable for the Parser
-def Lex(Tokenizied):
+def Lex(Tokenized):
 	iterate = 0
-	Tokenized = []
-	while iterate != len(Tokenizied):
+	Lexed = []
+	print(Tokenized)
+	while iterate != len(Tokenized):
 		try:
-			if Tokenizied[iterate] == "var ":
-				Tokenized += [["var", tokensdict["var "]]]
+			if Tokenized[iterate][0] == "var ":
+				Lexed += [["var", tokensdict["var "]]]
 			else:
-				Tokenized += [[Tokenizied[iterate], tokensdict[Tokenizied[iterate]]]]
+				Lexed += [[Tokenized[iterate][0], tokensdict[Tokenized[iterate][0]]]]
 		except:
-			TokeniziedEnd = Tokenizied[iterate][-2:]
-			if TokeniziedEnd == "/S":
-				Final = Tokenizied[iterate]
+			TokenizedEnd = Tokenized[iterate][0][-2:]
+			if TokenizedEnd == "/S":
+				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Tokenized += [[Final, "STRING"]]
-			elif TokeniziedEnd == "/V":
-				Final = Tokenizied[iterate]
+				Lexed += [[Final, "STRING"]]
+			elif TokenizedEnd == "/V":
+				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Tokenized += [[Final, "VAR"]]
-			elif TokeniziedEnd == "/D":
-				Final = Tokenizied[iterate]
+				Lexed += [[Final, "VAR"]]
+			elif TokenizedEnd == "/D":
+				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Tokenized += [[Final, "VARNAME"]]
+				Lexed += [[Final, "VARNAME"]]
+			elif TokenizedEnd == "/N":
+				Final = Tokenized[iterate][0]
+				Final = Final[:-2]
+				Lexed += [[Final, "NUMBER"]]
 		iterate += 1
-	return Tokenized
+	return Lexed

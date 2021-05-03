@@ -12,7 +12,7 @@ except:
 	f = open("text.sol", "r")
 text = []
 for iterate in f:
-	text += [iterate]
+	text += [r"{}".format(iterate)]
 
 #-----------------------------------------------------------------|
 #-                                                                |

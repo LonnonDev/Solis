@@ -21,6 +21,3 @@ def outlnFUNC(text):
 #& Exits the program
 def vent():
 	exit()
-
-def declarevar(var):
-	print()
