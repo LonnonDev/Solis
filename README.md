@@ -28,7 +28,7 @@ The current types are
 - String
   - ```"<data>"```
 - Integer (No Floating Point Value)
-  - ```<Any Number wihtout a Decimal```
+  - ```<Any Number without a Decimal```
 ## Printing ##
 outln prints with a newline after, takes arg string
 
