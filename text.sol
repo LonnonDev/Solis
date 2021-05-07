@@ -1,3 +1,3 @@
-var urmom = "1"
+var urmom = 1
 out |urmom|
 vent

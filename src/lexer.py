@@ -17,16 +17,18 @@ def pairs(o):
 
 #* This turns the code into a Tokenized List and then Turns that into a Lexed List that the Parser can understand and run
 def Tokenize(text):
-	for i, index in pairs(text):
-		text[i] = text[i].rstrip("\n")
 	iterate = 0
 	Tokenized = []
+	lastchar = ""
+	line = 1
 	while iterate != len(text):
 		check = ""
-		line = 1
 		for char in text[iterate]:
 			check += char
-			if check in tokens:
+			#_ If newline add one to Line
+			if "\n" in check:
+				line += 1
+			elif check in tokens:
 				if check == "out":
 					if text[iterate][0:5] == "outln":
 						Tokenized += [["outln", line]]
@@ -61,10 +63,15 @@ def Tokenize(text):
 				else:
 					Tokenized += [[char, line]]
 					check = ""
+			#_ See if the user typed a number and then define it
 			elif char in numbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
-				Tokenized += [[f"{char}/N", line]]
-			elif check == "\\n":
-				line += 1
+				if lastchar in numbers:
+					newchar = Tokenized[-1][0].replace("/N", "")
+					Tokenized[-1] = [f"{newchar+char}/N", line]
+					lastchar = char
+				else:
+					lastchar = char
+					Tokenized += [[f"{char}/N", line]]
 		iterate += 1
 	Lexed = Lex(Tokenized)
 	print(Lexed)
@@ -77,26 +84,50 @@ def Lex(Tokenized):
 	while iterate != len(Tokenized):
 		try:
 			if Tokenized[iterate][0] == "var ":
-				Lexed += [["var", tokensdict["var "]]]
+				Lexed += [[
+					"var",
+					tokensdict["var "],
+					Tokenized[iterate][1]
+				]]
 			else:
-				Lexed += [[Tokenized[iterate][0], tokensdict[Tokenized[iterate][0]]]]
+				Lexed += [[
+					Tokenized[iterate][0], 
+					tokensdict[Tokenized[iterate][0]],
+					Tokenized[iterate][1]
+				]]
 		except:
 			TokenizedEnd = Tokenized[iterate][0][-2:]
 			if TokenizedEnd == "/S":
 				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Lexed += [[Final, "STRING"]]
+				Lexed += [[
+					Final, 
+					"STRING",
+					Tokenized[iterate][1]
+				]]
 			elif TokenizedEnd == "/V":
 				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Lexed += [[Final, "VAR"]]
+				Lexed += [[
+					Final,
+					"VAR",
+					Tokenized[iterate][1]
+				]]
 			elif TokenizedEnd == "/D":
 				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Lexed += [[Final, "VARNAME"]]
+				Lexed += [[
+					Final,
+					"VARNAME",
+					Tokenized[iterate][1]
+				]]
 			elif TokenizedEnd == "/N":
 				Final = Tokenized[iterate][0]
 				Final = Final[:-2]
-				Lexed += [[Final, "NUMBER"]]
+				Lexed += [[
+					Final,
+				 	"NUMBER",
+					Tokenized[iterate][1]
+				]]
 		iterate += 1
 	return Lexed
