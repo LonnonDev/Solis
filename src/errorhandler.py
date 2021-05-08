@@ -35,12 +35,12 @@ class Error():
     def __str__(self):
         #$ If no file AND no line,
         if self.file is None and self.line is None:
-            return f"Error:\n    {str(self.err)}"
+            return f"Error:\n    {self.err}"
         #$ Else if there is a file erroring but no specific line,
         elif self.line is None:
-            return f"Error in file '{self.file}'\n    {str(self.err)}"
+            return f"Error in file '{self.file}'\n    {self.err}"
         #$ Otherwise (if there is a file and a line),
         else:
-            return f"Error in file '{self.file}' on line {str(self.line)}\n    {str(self.err)}"
+            return f"Error in file '{self.file}' on line {self.line}\n    {str(self.err)}"
     def errout(self):
-        ctext(str(self),text="red",bg="black")
+        ctext(str(self), text="red", bg="black")
