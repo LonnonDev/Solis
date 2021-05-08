@@ -1,2 +1,2 @@
-var urcar = "Hello"
+var urcar = ""
 outln |urcar|
