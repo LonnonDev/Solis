@@ -37,10 +37,15 @@ def ConvertVars(lexed):
 		if not storedvars:
 			storedvars = {}
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
-			newdict = {lexed[iterate+1][0]: [lexed[iterate+3][0], lexed[iterate+3][1], lexed[iterate+3][2]]}
-			storedvars = {**storedvars, **newdict}
+			try:
+				newdict = {lexed[iterate+1][0]: [lexed[iterate+3][0], lexed[iterate+3][1], lexed[iterate+3][2]]}
+				storedvars = {**storedvars, **newdict}
+			except:
+				newdict = {lexed[iterate+1][0]: ['none', 'NONE', lexed[iterate+1][2]]}
+				storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
 			lexed[iterate] = [var[0], var[1], var[2]]
 		iterate += 1
+	print(storedvars)
 	return lexed
