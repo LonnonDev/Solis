@@ -47,5 +47,4 @@ def ConvertVars(lexed):
 			var = storedvars[lexed[iterate][0]]
 			lexed[iterate] = [var[0], var[1], var[2]]
 		iterate += 1
-	print(storedvars)
 	return lexed
