@@ -21,7 +21,7 @@ def Parser(text):
 					elif text[iterate][0] == "outln":
 						outlnFUNC(text[iterate+1][0])
 				elif text[iterate+1][1] == "STRING" and text[iterate+1][0] == '"':
-					Error(ErrorType.InvalidString, text[iterate][2]).errout()
+					Error().errout(ErrorType.InvalidString, text[iterate][2])
 			except:
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
