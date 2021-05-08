@@ -1,4 +1,11 @@
 from enum import Enum
+
+#-----------------------------------------------------------------|
+#-                                                                |
+#-                           ErrorType                            |
+#-                                                                |
+#-----------------------------------------------------------------|
+
 class AutoIncrementEnum(Enum): # parent class -- each new enum field has its value incremented
     def __new__(cls,arg): # new(class,argument) -- cls is the class inheriting, arg is the value passed into the unary tuple
         value = len(cls.__members__) # value = however many enum members there are currently (no info would be 0 because there are none, then 1, etc.)
