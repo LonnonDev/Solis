@@ -12,7 +12,7 @@ def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
 	while iterate != len(text):
-		#_ Look for the word out and make sure it has the type of FUNC
+		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
 			try:
 				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER":
