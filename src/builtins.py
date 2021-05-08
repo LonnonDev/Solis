@@ -17,7 +17,3 @@ def outFUNC(text):
 def outlnFUNC(text):
 	text = text.replace("\\n", "\n")
 	print(f"{text}", end='\n')
-    
-#& Exits the program
-def vent():
-	exit()
