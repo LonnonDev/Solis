@@ -1,3 +1,2 @@
-var urmom = ""
-out |urmom|
-vent
+var urcar = "Hello"
+outln |urcar|
