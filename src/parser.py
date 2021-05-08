@@ -11,6 +11,7 @@ from src.errorhandler import Error, ErrorType
 def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
+	print(text)
 	while iterate != len(text):
 		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
@@ -45,6 +46,7 @@ def ConvertVars(lexed):
 				storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
+			var[0] = var[0].replace(" ", "")
 			lexed[iterate] = [var[0], var[1], var[2]]
 		iterate += 1
 	return lexed

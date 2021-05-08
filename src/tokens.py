@@ -6,7 +6,7 @@ tokens = [
 	"var ",
 	"=",
 	"|",
-	"none"
+	" none"
 ]
 tokensdict = {
 	"out": "FUNC",
@@ -16,5 +16,5 @@ tokensdict = {
 	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
 	"|": "VARUSE",
-	"none": "NONETYPE"
+	" none": "NULLTYPE"
 }
