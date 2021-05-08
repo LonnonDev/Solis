@@ -5,7 +5,8 @@ tokens = [
 	"vent",
 	"var ",
 	"=",
-	"|"
+	"|",
+	"none"
 ]
 tokensdict = {
 	"out": "FUNC",
@@ -14,5 +15,6 @@ tokensdict = {
 	"vent": "FUNC",
 	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
-	"|": "VARUSE"
+	"|": "VARUSE",
+	"none": "NONETYPE"
 }
