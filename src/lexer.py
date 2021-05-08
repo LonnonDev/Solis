@@ -74,7 +74,6 @@ def Tokenize(text):
 					Tokenized += [[f"{char}/N", line]]
 		iterate += 1
 	Lexed = Lex(Tokenized)
-	print(Lexed)
 	return Lexed
 
 #* This Lexes the Tokenized list to make it understandable for the Parser
