@@ -10,11 +10,11 @@ from enum import Enum
 class AutoIncrementEnum(Enum): 
     #* new(class,argument) -- cls is the class inheriting, arg is the value passed into the unary tuple
     def __new__(cls,arg):
-        #* Value = However many enum members there are currently (INVALID_STRING would be 0 because there are none, then ADDITIONAL_INFO 1, etc.)
+        #_ Value = However many enum members there are currently (INVALID_STRING would be 0 because there are none, then ADDITIONAL_INFO 1, etc.)
         value = len(cls.__members__)
         obj = object.__new__(cls)
         obj._value = value
-        #* Value2 is set to arg.
+        #_ Value2 is set to arg.
         obj.value2 = arg
         return obj
 #* Parent class is AutoIncrementEnum which means when __new__ is ran here (ie. by each enum member), it will also carry up to the parent
