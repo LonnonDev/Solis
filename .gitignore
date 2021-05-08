@@ -11,15 +11,7 @@ dist.zip
 *.pyc
 __pycache__/main.cpython-39.pyc
 *.pyc
-__pycache__/main.cpython-39.pyc
-src/commentexample.py
-*.pyc
-*.pyc
-__pycache__/main.cpython-39.pyc
-*.pyc
-__pycache__/main.cpython-39.pyc
 soleado.ico
-src/errorhandler.py
 soleado.png
 main.spec
 text.sol
