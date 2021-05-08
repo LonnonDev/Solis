@@ -25,7 +25,7 @@ for iterate in f:
 #-----------------------------------------------------------------|
 
 LexedVersion = Tokenize(text)
-Parser(file, LexedVersion)
+Parser(LexedVersion)
 if toggle == True:
 	print("\nPress any key to continue...")
 	m.getch()
