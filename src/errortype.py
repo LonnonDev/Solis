@@ -6,16 +6,21 @@ from enum import Enum
 #-                                                                |
 #-----------------------------------------------------------------|
 
-class AutoIncrementEnum(Enum): # parent class -- each new enum field has its value incremented
-    def __new__(cls,arg): # new(class,argument) -- cls is the class inheriting, arg is the value passed into the unary tuple
-        value = len(cls.__members__) # value = however many enum members there are currently (no info would be 0 because there are none, then 1, etc.)
+#* Parent Class -- each new enum member has its value incremented
+class AutoIncrementEnum(Enum): 
+    #* new(class,argument) -- cls is the class inheriting, arg is the value passed into the unary tuple
+    def __new__(cls,arg):
+        #* Value = However many enum members there are currently (INVALID_STRING would be 0 because there are none, then ADDITIONAL_INFO 1, etc.)
+        value = len(cls.__members__)
         obj = object.__new__(cls)
         obj._value = value
-        obj.outstr = arg # set outstr to the arg inputted
+        #* Value2 is set to arg.
+        obj.value2 = arg
         return obj
-class ErrorType(AutoIncrementEnum): # parent class is AutoIncrementEnum which means when __new__ is ran here, it will also carry up to the parent
+#* Parent class is AutoIncrementEnum which means when __new__ is ran here (ie. by each enum member), it will also carry up to the parent
+class ErrorType(AutoIncrementEnum):
     def __str__(self):
-        return "Error code " + str(self._value) + ": '" + self.outstr + "'"
+        return "Error code " + str(self._value) + ": '" + self.value2 + "'"
 
-    InvalidString = ("Invalid String Format")
-    AdditionalInfo = ("Additional Info")
+    INVALID_STRING = ("Invalid String Format")
+    ADDITIONAL_INFO = ("Additional Info")
