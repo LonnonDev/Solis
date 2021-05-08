@@ -26,23 +26,30 @@ class Error():
 
 	#_ This Throws an error into the console
 	def throw(self, errortype, line, message: str = ""):
+		if message == "":
+			message = errortype.value[1]
 		if errortype == ErrorType.InvalidString:
-			if message == "":
-				message = "Invalid String Format"
-			ErrorMessage = Error().create(message, line)
-			ctext(ErrorMessage, text="red", bg="black")
+			Error().create(message, line)
+		elif errortype == ErrorType.AdditionalInfo:
+			Error().create(message, line)
 	
 	#_ This Creates errors and returns them to be printed
 	def create(self, message: None, line: None):
+		ErrorMessage = ""
 		if message and line:
-			return f"In {self.file} at line {line}\n    {message}"
+			ErrorMessage = f"In {self.file} at line {line}\n    {message}"
 		elif message and not line:
-			return f"In {self.file}\n\t{message}"
+			ErrorMessage =  f"In {self.file}\n\t{message}"
 		elif not message and line:
-			return f"In {self.file} at line {line}"
+			ErrorMessage = f"In {self.file} at line {line}"
 		else:
-			return f"In {self.file}"
+			ErrorMessage = f"In {self.file}"
+		Error().senderror(ErrorMessage)
+	
+	def senderror(self, message):
+		ctext(message, text="red", bg="black")
 
 #* Enum Class for ErrorTypes
 class ErrorType(Enum):
-	InvalidString = 0
+	InvalidString = (0, "Invalid String Format")
+	AdditionalInfo = (1, "Additional Info")

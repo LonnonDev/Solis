@@ -14,6 +14,7 @@ def Parser(text):
 	while iterate != len(text):
 		#_ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
+			print(text[iterate-1])
 			try:
 				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER":
 					if text[iterate][0] == "out":
@@ -21,7 +22,7 @@ def Parser(text):
 					elif text[iterate][0] == "outln":
 						outlnFUNC(text[iterate+1][0])
 				elif text[iterate+1][1] == "STRING" and text[iterate+1][0] == '"':
-					Error().throw(ErrorType.InvalidString, 1)
+					Error().throw(ErrorType.InvalidString, text[iterate][2])
 			except:
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
