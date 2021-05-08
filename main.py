@@ -4,6 +4,7 @@ import time
 
 from src.lexer import Tokenize
 from src.parser import Parser
+from src.errorhandler import Error
 from onoff import toggle
 
 file = ""
@@ -25,12 +26,6 @@ for iterate in f:
 
 LexedVersion = Tokenize(text)
 Parser(file, LexedVersion)
-#time.sleep(10)
 if toggle == True:
-	try:
-		def wait():
-			m.getch()
-		print("\nPress any key to continue...")
-		wait()
-	except:
-		os.system('read -s -n 1 -p "Press any key to continue..."')
+	print("\nPress any key to continue...")
+	m.getch()
