@@ -34,14 +34,12 @@ class Error():
 			Error().create(message, line)
 	
 	#_ This Creates errors and returns them to be printed
-	def create(self, message: None, line: None):
+	def create(self, message, line: None):
 		ErrorMessage = ""
 		if message and line:
 			ErrorMessage = f"In {self.file} at line {line}\n    {message}"
 		elif message and not line:
 			ErrorMessage =  f"In {self.file}\n\    {message}"
-		elif not message and line:
-			ErrorMessage = f"In {self.file} at line {line}"
 		else:
 			ErrorMessage = f"In {self.file}"
 		Error().senderror(ErrorMessage)
