@@ -4,7 +4,6 @@ import time
 
 from src.lexer import Tokenize
 from src.parser import Parser
-from src.errorhandler import Error
 from onoff import toggle
 
 file = ""
