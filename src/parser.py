@@ -24,7 +24,7 @@ def Parser(text):
 					Error(ErrorType.INVALID_STRING, text[iterate][2]).errout()
 			except:
 				pass
-			#_ Look for the word vent and make sure it has the type of FUNC
+			#$ Look for the word vent and make sure it has the type of FUNC
 			if text[iterate][0] == "vent":
 				break
 		iterate += 1
