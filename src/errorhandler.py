@@ -1,6 +1,7 @@
-from enum import Enum
 import sys
 from Color_Console import ctext
+
+from src.errortype import ErrorType
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -8,7 +9,7 @@ from Color_Console import ctext
 #-                                                                |
 #-----------------------------------------------------------------|
 
-#* This Just gets the filename of the inputted file
+#* This just gets the filename of the inputted file
 def GetFileName():
 	file = ""
 	try:
@@ -19,35 +20,27 @@ def GetFileName():
 		f = open(file, "r")
 	return file
 
-#* This Creates Errors and prints them to console
-class Error():
-	def __init__(self):
-		self.file = GetFileName()
-
-	#_ This Throws an error into the console
-	def throw(self, errortype, line, message: str = ""):
-		if message == "":
-			message = errortype.value[1]
-		if errortype == ErrorType.InvalidString:
-			Error().create(message, line)
-		elif errortype == ErrorType.AdditionalInfo:
-			Error().create(message, line)
-	
-	#_ This Creates errors and returns them to be printed
-	def create(self, message, line: None):
-		ErrorMessage = ""
-		if message and line:
-			ErrorMessage = f"In {self.file} at line {line}\n    {message}"
-		elif message and not line:
-			ErrorMessage =  f"In {self.file}\n\    {message}"
-		else:
-			ErrorMessage = f"In {self.file}"
-		Error().senderror(ErrorMessage)
-	
-	def senderror(self, message):
-		ctext(message, text="red", bg="black")
-
-#* Enum Class for ErrorTypes
-class ErrorType(Enum):
-	InvalidString = (0, "Invalid String Format")
-	AdditionalInfo = (1, "Additional Info")
+#* Class containing ErrorType, and maybe file and line if needed
+class Error(): 
+    #* Initializer, takes ErrorType and optionally file and line
+    def __init__(self,err,line=None,file=None): 
+        #$ If err is of type ErrorType, set initializer values, otherwise, raise a TypeError.
+        if isinstance(err,ErrorType):
+            #_ Set fields equal to initializer values
+            self.err = err
+            self.file = file or GetFileName()
+            self.line = line
+        else:
+            raise TypeError("Error(err,file,line) -- type of err must be ErrorType enum!")
+    def __str__(self):
+        #$ If no file AND no line,
+        if self.file is None and self.line is None:
+            return f"Error:\n    {str(self.err)}"
+        #$ Else if there is a file erroring but no specific line,
+        elif self.line is None:
+            return f"Error in file '{self.file}'\n    {str(self.err)}"
+        #$ Otherwise (if there is a file and a line),
+        else:
+            return f"Error in file '{self.file}' on line {str(self.line)}\n    {str(self.err)}"
+    def errout(self):
+        ctext(str(self),text="red",bg="black")
