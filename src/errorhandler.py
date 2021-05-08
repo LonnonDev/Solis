@@ -2,13 +2,14 @@ import sys
 from Color_Console import ctext
 
 from src.errortype import ErrorType
+
 #-----------------------------------------------------------------|
 #-                                                                |
 #-                        Error Handler                           |
 #-                                                                |
 #-----------------------------------------------------------------|
 
-#* This Just gets the filename of the inputted file
+#* This just gets the filename of the inputted file
 def GetFileName():
 	file = ""
 	try:
@@ -19,20 +20,27 @@ def GetFileName():
 		f = open(file, "r")
 	return file
 
-class Error(): # class containing ErrorType, and maybe file and line if needed
-    def __init__(self,err,line=None,file=None): # initializer, takes ErrorType and optionally file and line
-        if isinstance(err,ErrorType): # if err is an ErrorType, do shit
-            self.err = err   #set fields equal to initializer values
+#* Class containing ErrorType, and maybe file and line if needed
+class Error(): 
+    #* Initializer, takes ErrorType and optionally file and line
+    def __init__(self,err,line=None,file=None): 
+        #$ If err is of type ErrorType, set initializer values, otherwise, raise a TypeError.
+        if isinstance(err,ErrorType):
+            #_ Set fields equal to initializer values
+            self.err = err
             self.file = file or GetFileName()
             self.line = line
-        else: #if not, don't
+        else:
             raise TypeError("Error(err,file,line) -- type of err must be ErrorType enum!")
-    def __str__(self): # how should it be str()'d
-        if self.file is None and self.line is None: # if no file and no line,
-            return f"Error:\n    {str(self.err)}" # just return str'd error
-        elif self.line is None: # if no line
+    def __str__(self):
+        #$ If no file AND no line,
+        if self.file is None and self.line is None:
+            return f"Error:\n    {str(self.err)}"
+        #$ Else if there is a file erroring but no specific line,
+        elif self.line is None:
             return f"Error in file '{self.file}'\n    {str(self.err)}"
-        else: #if line and file (or just line but that wouldn't normally occur)
+        #$ Otherwise (if there is a file and a line),
+        else:
             return f"Error in file '{self.file}' on line {str(self.line)}\n    {str(self.err)}"
-    def errout(self): # errout just prints str'd itself
+    def errout(self):
         ctext(str(self),text="red",bg="black")
