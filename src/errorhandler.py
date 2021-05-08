@@ -1,5 +1,6 @@
 from enum import Enum
 import sys
+from Color_Console import ctext
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -7,6 +8,7 @@ import sys
 #-                                                                |
 #-----------------------------------------------------------------|
 
+#* This Just gets the filename of the inputted file
 def GetFileName():
 	file = ""
 	try:
@@ -17,20 +19,23 @@ def GetFileName():
 		f = open(file, "r")
 	return file
 
+#* This Creates Errors and prints them to console
 class Error():
-	def __init__(self, file):
+	def __init__(self):
 		self.file = GetFileName()
 
+	#_ This Throws an error into the console
 	def throw(self, errortype, line, message: str = ""):
-		print(errortype)
-		if errortype.value == ErrorType.InvalidString.value:
+		if errortype == ErrorType.InvalidString:
 			if message == "":
-				message = "No Info Provided"
-			self.Error.create(message, line)
+				message = "Invalid String Format"
+			ErrorMessage = Error().create(message, line)
+			ctext(ErrorMessage, text="red", bg="black")
 	
-	def create(self, message: str = None, line: str = None):
+	#_ This Creates errors and returns them to be printed
+	def create(self, message: None, line: None):
 		if message and line:
-			return f"In {self.file} at line {line}\n\t{message}"
+			return f"In {self.file} at line {line}\n    {message}"
 		elif message and not line:
 			return f"In {self.file}\n\t{message}"
 		elif not message and line:
@@ -38,8 +43,6 @@ class Error():
 		else:
 			return f"In {self.file}"
 
+#* Enum Class for ErrorTypes
 class ErrorType(Enum):
 	InvalidString = 0
-
-	def value(self):
-		return self.value
