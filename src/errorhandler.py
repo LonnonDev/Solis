@@ -39,7 +39,7 @@ class Error():
 		if message and line:
 			ErrorMessage = f"In {self.file} at line {line}\n    {message}"
 		elif message and not line:
-			ErrorMessage =  f"In {self.file}\n\t{message}"
+			ErrorMessage =  f"In {self.file}\n\    {message}"
 		elif not message and line:
 			ErrorMessage = f"In {self.file} at line {line}"
 		else:
