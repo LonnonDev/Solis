@@ -2,7 +2,7 @@
 #!
 #@
 ##
-#$
+#$ Put Comments above if else statements using this color
 #%
 #^
 #&
