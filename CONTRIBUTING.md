@@ -15,3 +15,5 @@
 - New Features that enhance the project.
 - Localization of Documents, or wiki's of the project.
 - New feature suggestions.
+
+Please Read all Da Rules
