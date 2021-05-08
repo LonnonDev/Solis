@@ -14,7 +14,6 @@ def Parser(text):
 	while iterate != len(text):
 		#_ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
-			print(text[iterate-1])
 			try:
 				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER":
 					if text[iterate][0] == "out":
@@ -30,7 +29,7 @@ def Parser(text):
 				break
 		iterate += 1
 
-#* Converts the var with a space to var with no space
+#* Converts the vars to their values
 def ConvertVars(lexed):
 	storedvars = {}
 	iterate = 0
@@ -38,10 +37,10 @@ def ConvertVars(lexed):
 		if not storedvars:
 			storedvars = {}
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
-			newdict = {lexed[iterate+1][0]: [lexed[iterate+3][0], lexed[iterate+3][1]]}
+			newdict = {lexed[iterate+1][0]: [lexed[iterate+3][0], lexed[iterate+3][1], lexed[iterate+3][2]]}
 			storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
-			lexed[iterate] = [var[0], var[1]]
+			lexed[iterate] = [var[0], var[1], var[2]]
 		iterate += 1
 	return lexed
