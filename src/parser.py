@@ -1,4 +1,7 @@
+from enum import Enum
+
 from src.builtins import *
+from src.errorhandler import Error
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -7,7 +10,7 @@ from src.builtins import *
 #-----------------------------------------------------------------|
 
 #* This checks the Lexed code and parses it and runs it
-def Parser(text):
+def Parser(filename, text):
 	iterate = 0
 	text = ConvertVars(text)
 	while iterate != len(text):
@@ -20,8 +23,7 @@ def Parser(text):
 					elif text[iterate][0] == "outln":
 						outlnFUNC(text[iterate+1][0])
 				elif text[iterate+1][1] == "STRING" and text[iterate+1][0] == '"':
-					print(f"""\rToo Little or Too many \"'s at 
-{text[iterate][0]} {text[iterate+1][0]}\n""")
+					Error.throw(ErrorType.InvalidString, filename, 1, "Your Mom")
 			except:
 				pass
 			#_ Look for the word vent and make sure it has the type of FUNC
@@ -43,3 +45,6 @@ def ConvertVars(lexed):
 			lexed[iterate] = [var[0], var[1]]
 		iterate += 1
 	return lexed
+
+class ErrorType(Enum):
+    InvalidString = 0x00

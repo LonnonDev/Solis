@@ -6,10 +6,13 @@ from src.lexer import Tokenize
 from src.parser import Parser
 from onoff import toggle
 
+file = ""
 try:
-	f = (open(str(sys.argv[1]), "r"))
+	file = str(sys.argv[1])
+	f = (open(file, "r"))
 except:
-	f = open("text.sol", "r")
+	file = "text.sol"
+	f = open(file, "r")
 text = []
 for iterate in f:
 	text += [r"{}".format(iterate)]
@@ -21,7 +24,7 @@ for iterate in f:
 #-----------------------------------------------------------------|
 
 LexedVersion = Tokenize(text)
-Parser(LexedVersion)
+Parser(file, LexedVersion)
 #time.sleep(10)
 if toggle == True:
 	try:
