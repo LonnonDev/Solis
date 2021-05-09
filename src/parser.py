@@ -11,16 +11,22 @@ from src.errorhandler import Error, ErrorType
 def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
-	print(text)
+	#print(text)
 	while iterate != len(text):
 		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
 			try:
-				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER":
-					if text[iterate][0] == "out":
-						outFUNC(text[iterate+1][0])
-					elif text[iterate][0] == "outln":
-						outlnFUNC(text[iterate+1][0])
+				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER" or text[iterate+1][1] == "NONETYPE":
+					if text[iterate+1][1] == "NULLTYPE":
+						if text[iterate][0] == "out":
+							outFUNC("NONETYPE")
+						elif text[iterate][0] == "outln":
+							outlnFUNC("NONETYPE")
+					else:
+						if text[iterate][0] == "out":
+							outFUNC(text[iterate+1][0])
+						elif text[iterate][0] == "outln":
+							outlnFUNC(text[iterate+1][0])
 				elif text[iterate+1][1] == "STRING" and text[iterate+1][0] == '"':
 					Error(ErrorType.INVALID_STRING, text[iterate][2]).errout()
 			except:

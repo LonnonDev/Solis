@@ -16,5 +16,5 @@ tokensdict = {
 	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
 	"|": "VARUSE",
-	" none": "NULLTYPE"
+	" none": "NONETYPE"
 }
