@@ -21,6 +21,7 @@ def Tokenize(text):
 	Tokenized = []
 	lastchar = ""
 	line = 1
+	charnumber = 0
 	while iterate != len(text):
 		check = ""
 		for char in text[iterate]:
@@ -28,27 +29,28 @@ def Tokenize(text):
 			#_ If newline add one to Line
 			if "\n" in check:
 				line += 1
+				charnumber = 0
 			elif check in tokens:
 				if check == "out":
 					if text[iterate][0:5] == "outln":
-						Tokenized += [["outln", line]]
+						Tokenized += [["outln", line, charnumber]]
 						check = ""
 					else:
-						Tokenized += [[check, line]]
+						Tokenized += [[check, line, charnumber]]
 						check = ""
 				else:
-					Tokenized += [[check, line]]
+					Tokenized += [[check, line, charnumber]]
 					check = ""
 			elif char in tokens:
 				#_ This gets the value inside of the of the Quotes
 				if char == '"' and Tokenized[-1][0] == '"':
 					Tokenized.pop(-1)
-					Tokenized += [[f"{check[:-1]}/S", line]]
+					Tokenized += [[f"{check[:-1]}/S", line, charnumber]]
 					check = ""
 				#_ Get's the inline var, var name
 				elif char == '|' and Tokenized[-1][0] == '|':
 					Tokenized.pop(-1)
-					Tokenized += [[f"{check[:-1]}/V", line]]
+					Tokenized += [[f"{check[:-1]}/V", line, charnumber]]
 					check = ""
 				#_ Get Assignment operator and name of the var
 				elif char == "=":
@@ -57,21 +59,22 @@ def Tokenize(text):
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
-					Tokenized += [[f"{Final[0]}/D", line]]
-					Tokenized += [[Final[1], line]]
+					Tokenized += [[f"{Final[0]}/D", line, charnumber]]
+					Tokenized += [[Final[1], line, charnumber]]
 					check = ""
 				else:
-					Tokenized += [[char, line]]
+					Tokenized += [[char, line, charnumber]]
 					check = ""
 			#_ See if the user typed a number and then define it
 			elif char in numbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
 				if lastchar in numbers:
 					newchar = Tokenized[-1][0].replace("/N", "")
-					Tokenized[-1] = [f"{newchar+char}/N", line]
+					Tokenized[-1] = [f"{newchar+char}/N", line, charnumber]
 					lastchar = char
 				else:
 					lastchar = char
-					Tokenized += [[f"{char}/N", line]]
+					Tokenized += [[f"{char}/N", line, charnumber]]
+			charnumber += 1
 		iterate += 1
 	Lexed = Lex(Tokenized)
 	return Lexed
@@ -86,13 +89,15 @@ def Lex(Tokenized):
 				Lexed += [[
 					"var",
 					tokensdict["var "],
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 			else:
 				Lexed += [[
 					Tokenized[iterate][0], 
 					tokensdict[Tokenized[iterate][0]],
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 		except:
 			TokenizedEnd = Tokenized[iterate][0][-2:]
@@ -102,7 +107,8 @@ def Lex(Tokenized):
 				Lexed += [[
 					Final, 
 					"STRING",
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 			elif TokenizedEnd == "/V":
 				Final = Tokenized[iterate][0]
@@ -110,7 +116,8 @@ def Lex(Tokenized):
 				Lexed += [[
 					Final,
 					"VAR",
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 			elif TokenizedEnd == "/D":
 				Final = Tokenized[iterate][0]
@@ -118,7 +125,8 @@ def Lex(Tokenized):
 				Lexed += [[
 					Final,
 					"VARNAME",
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 			elif TokenizedEnd == "/N":
 				Final = Tokenized[iterate][0]
@@ -126,7 +134,8 @@ def Lex(Tokenized):
 				Lexed += [[
 					Final,
 				 	"NUMBER",
-					Tokenized[iterate][1]
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
 				]]
 		iterate += 1
 	return Lexed
