@@ -1,5 +1,6 @@
 from src.builtins import *
 from src.errorhandler import Error, ErrorType
+from onoff import debugmode
 
 #-----------------------------------------------------------------|
 #-                                                                |
@@ -11,7 +12,8 @@ from src.errorhandler import Error, ErrorType
 def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
-	#print(text)
+	if debugmode == True:
+		print(text)
 	while iterate != len(text):
 		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":

@@ -1,1 +1,2 @@
 toggle = False 
+debugmode = True
