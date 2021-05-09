@@ -63,6 +63,11 @@ def ConvertVars(lexed):
 				storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
-			lexed[iterate] = [var[0], var[1], var[2], var[3]]
+			lexed[iterate] = [
+				var[0], 
+				var[1], 
+				var[2], 
+				var[3]
+			]
 		iterate += 1
 	return lexed
