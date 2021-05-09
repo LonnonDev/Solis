@@ -1,2 +1,2 @@
-var urcar = none
+var urcar != none
 outln |urcar|

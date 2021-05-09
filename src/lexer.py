@@ -52,6 +52,16 @@ def Tokenize(text):
 					Tokenized.pop(-1)
 					Tokenized += [[f"{check[:-1]}/V", line, charnumber]]
 					check = ""
+				#_ Get NotAssignment operator and name of the var
+				elif check.replace(" ", "")[-2:] == "!=":
+					Final = check
+					Final == Final[:-3]
+					Final = Final.replace(" ", "")
+					Final = Final.split("=")
+					Final[1] = "="
+					Tokenized += [[f"{Final[0][:-1]}/D", line, charnumber]]
+					Tokenized += [["!=", line, charnumber]]
+					check = ""
 				#_ Get Assignment operator and name of the var
 				elif char == "=":
 					Final = check
@@ -100,42 +110,26 @@ def Lex(Tokenized):
 					Tokenized[iterate][2]
 				]]
 		except:
+			def CreateLexed(Name):
+				Final = Tokenized[iterate][0]
+				Final = Final[:-2]
+				Lexed = [[
+					Final,
+				 	Name,
+					Tokenized[iterate][1],
+					Tokenized[iterate][2]
+				]]
+				return Lexed
 			TokenizedEnd = Tokenized[iterate][0][-2:]
+			Final = []
 			if TokenizedEnd == "/S":
-				Final = Tokenized[iterate][0]
-				Final = Final[:-2]
-				Lexed += [[
-					Final, 
-					"STRING",
-					Tokenized[iterate][1],
-					Tokenized[iterate][2]
-				]]
+				Final = CreateLexed("STRING")
 			elif TokenizedEnd == "/V":
-				Final = Tokenized[iterate][0]
-				Final = Final[:-2]
-				Lexed += [[
-					Final,
-					"VAR",
-					Tokenized[iterate][1],
-					Tokenized[iterate][2]
-				]]
+				Final = CreateLexed("VAR")
 			elif TokenizedEnd == "/D":
-				Final = Tokenized[iterate][0]
-				Final = Final[:-2]
-				Lexed += [[
-					Final,
-					"VARNAME",
-					Tokenized[iterate][1],
-					Tokenized[iterate][2]
-				]]
+				Final = CreateLexed("VARNAME")
 			elif TokenizedEnd == "/N":
-				Final = Tokenized[iterate][0]
-				Final = Final[:-2]
-				Lexed += [[
-					Final,
-				 	"NUMBER",
-					Tokenized[iterate][1],
-					Tokenized[iterate][2]
-				]]
+				Final = CreateLexed("NUMBER")
+			Lexed += Final
 		iterate += 1
 	return Lexed

@@ -2,6 +2,7 @@ tokens = [
 	#% Vars
 	"var ",
 	"=",
+	"!=",
 	"|",
 
 	#% Functions
@@ -19,11 +20,15 @@ tokens = [
 
 	#% If Statements/Conditions
 	"if ",
+	" & ",
+	" | ",
+	" !== "
 ]
 tokensdict = {
 	#% Vars
 	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
+	"!=": "NOTASSIGNMENT",
 	"|": "VARUSE",
 
 	#% Functions
@@ -41,4 +46,7 @@ tokensdict = {
 
 	#% If Statements/Conditions
 	"if ": "IFSTATEMENT",
+	" & ": "AND",
+	" | ": "OR",
+	" !== ": "NOTEQUALTO",
 }

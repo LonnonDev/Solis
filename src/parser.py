@@ -44,17 +44,29 @@ def ConvertVars(lexed):
 		if not storedvars:
 			storedvars = {}
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
-			try:
-				newdict = {lexed[iterate+1][0]: [
-					lexed[iterate+3][0],
-					lexed[iterate+3][1], 
-					lexed[iterate-1][2],
-					lexed[iterate+3][3]
-				]}
-				storedvars = {**storedvars, **newdict}
-			except:
-				newdict = {lexed[iterate+1][0]: ['none', 'NONE', lexed[iterate+1][2]]}
-				storedvars = {**storedvars, **newdict}
+			def AddVar(value, datatype):
+				try:
+					newdict = {lexed[iterate+1][0]: [
+						value,
+						datatype,
+						lexed[iterate-1][2],
+						lexed[iterate+3][3]
+					]}
+					storedvars = {**storedvars, **newdict}
+				except:
+					newdict = {lexed[iterate+1][0]: [
+						'none', 
+						'NONETYPE', 
+						lexed[iterate+1][2], 
+						lexed[iterate+3][3]
+					]}
+				return newdict
+			if lexed[iterate+2][0] == "!=" and lexed[iterate][1] == "NOTASSIGNMENT":
+				value, datatype = Opposite(lexed[iterate])
+				newdict = AddVar(value, datatype)
+			else:
+				newdict = AddVar(lexed[iterate+3][0], lexed[iterate+3][1])
+			storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
 			lexed[iterate] = [
@@ -65,3 +77,7 @@ def ConvertVars(lexed):
 			]
 		iterate += 1
 	return lexed
+
+#* Gets opposite of an input
+def Opposite(text):
+	return value, datatype
