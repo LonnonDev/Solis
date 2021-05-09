@@ -23,13 +23,16 @@ tokens = [
 	" & ",
 	" | ",
 	" !== "
+
+	#% Comment
+	"#",
 ]
 tokensdict = {
 	#% Vars
 	"var ": "DECLARE",
+  	"|": "VARUSE",
 	"=": "ASSIGNMENT",
 	"!=": "NOTASSIGNMENT",
-	"|": "VARUSE",
 
 	#% Functions
   	"out": "FUNC",
@@ -49,4 +52,7 @@ tokensdict = {
 	" & ": "AND",
 	" | ": "OR",
 	" !== ": "NOTEQUALTO",
+
+	#% Comments
+	"#": "COMMENT",
 }
