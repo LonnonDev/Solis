@@ -28,6 +28,9 @@ def Tokenize(text):
 			check += char
 			#_ If newline add one to Line
 			if "\n" in check:
+				if text[iterate][0] == "#":
+					Tokenized += [[f"{check[:-1]}/C", line, charnumber]]
+					check = ""
 				line += 1
 				charnumber = 0
 			elif check in tokens:
@@ -130,6 +133,8 @@ def Lex(Tokenized):
 				Final = CreateLexed("VARNAME")
 			elif TokenizedEnd == "/N":
 				Final = CreateLexed("NUMBER")
+			elif TokenizedEnd == "/C":
+				Final = CreateLexed("COMMENT")
 			Lexed += Final
 		iterate += 1
 	return Lexed
