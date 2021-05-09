@@ -1,26 +1,44 @@
 tokens = [
-	"out",
-	'"',
-	"outln",
-	"vent",
+	#% Vars
 	"var ",
 	"=",
 	"|",
+
+	#% Functions
+  	"out",
+	"outln",
+	"vent",
+
+	#% Types
+	'"',
 	" none",
-	"if ",
+
+	#% Scopes
 	"{",
-	"}"
+	"}",
+
+	#% If Statements/Conditions
+	"if ",
 ]
 tokensdict = {
-	"out": "FUNC",
-	'"': "STRING",
-	"outln": "FUNC",
-	"vent": "FUNC",
+	#% Vars
 	"var ": "DECLARE",
 	"=": "ASSIGNMENT",
 	"|": "VARUSE",
+
+	#% Functions
+  	"out": "FUNC",
+	"outln": "FUNC",
+	"vent": "FUNC",
+
+	#% Types
+	'"': "STRING",
 	" none": "NONETYPE",
-	"if ": "IFSTATEMENT",
+	
+	#% Scopes
 	"{": "STARTSCOPE",
-	"}": "ENDSCOPE"
+	"}": "ENDSCOPE",
+
+	#% If Statements/Conditions
+	"if ": "IFSTATEMENT",
 }
