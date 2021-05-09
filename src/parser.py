@@ -52,7 +52,6 @@ def ConvertVars(lexed):
 						lexed[iterate-1][2],
 						lexed[iterate+3][3]
 					]}
-					storedvars = {**storedvars, **newdict}
 				except:
 					newdict = {lexed[iterate+1][0]: [
 						'none', 
@@ -61,8 +60,8 @@ def ConvertVars(lexed):
 						lexed[iterate+3][3]
 					]}
 				return newdict
-			if lexed[iterate+2][0] == "!=" and lexed[iterate][1] == "NOTASSIGNMENT":
-				value, datatype = Opposite(lexed[iterate])
+			if lexed[iterate+2][0] == "!=" and lexed[iterate+2][1] == "NOTASSIGNMENT":
+				value, datatype = Opposite(lexed[iterate+3])
 				newdict = AddVar(value, datatype)
 			else:
 				newdict = AddVar(lexed[iterate+3][0], lexed[iterate+3][1])
@@ -80,4 +79,8 @@ def ConvertVars(lexed):
 
 #* Gets opposite of an input
 def Opposite(text):
-	return value, datatype
+	value = text[0]
+	datatype = text[1]
+	if datatype == "STRING":
+		finalvalue = value[::-1]
+	return finalvalue, datatype
