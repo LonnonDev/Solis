@@ -1,3 +1,3 @@
 # your mom
-var urcar != "hello"
+var urcar = 2 + 1
 outln |urcar|

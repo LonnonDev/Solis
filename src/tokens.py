@@ -12,7 +12,9 @@ tokens = [
 
 	#% Types
 	'"',
-	" none",
+	"none",
+	"false",
+	"true",
 
 	#% Scopes
 	"{",
@@ -26,6 +28,13 @@ tokens = [
 
 	#% Comment
 	"#",
+
+	#% Math
+	"+",
+	"-",
+	"*",
+	"/",
+	"%",
 ]
 tokensdict = {
 	#% Vars
@@ -42,6 +51,8 @@ tokensdict = {
 	#% Types
 	'"': "STRING",
 	" none": "NONETYPE",
+	"true": "BOOLEAN",
+	"false": "BOOLEAN",
 	
 	#% Scopes
 	"{": "STARTSCOPE",
@@ -55,4 +66,30 @@ tokensdict = {
 
 	#% Comments
 	"#": "COMMENT",
+
+	#% Math
+	"+": "ADD",
+	"-": "SUB",
+	"*": "MUL",
+	"/": "DIV",
+	"%": "MOD",
+}
+
+TokenizedEndList = [
+	"S",
+	"V",
+	"D",
+	"N",
+	"C",
+	"B",
+	"U",
+]
+TokenizedEndDict = {
+	"S": "STRING",
+	"V": "VAR",
+	"D": "VARNAME",
+	"N": "NUMBER",
+	"C": "COMMENT",
+	"B": "BOOLEAN",
+	"U": "NONETYPE",
 }
