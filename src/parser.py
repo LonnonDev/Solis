@@ -53,19 +53,19 @@ def ConvertVars(lexed):
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
 			def AddVar(value, datatype):
 				try:
-					newdict = {lexed[iterate+1][0]: [
+					newdict = {lexed[iterate+1][0]: (
 						value,
 						datatype,
 						lexed[iterate-1][2],
 						lexed[iterate+3][3]
-					]}
+					)}
 				except:
-					newdict = {lexed[iterate+1][0]: [
+					newdict = {lexed[iterate+1][0]: (
 						'none', 
 						'NONETYPE', 
 						lexed[iterate+1][2], 
 						lexed[iterate+3][3]
-					]}
+					)}
 				return newdict
 			if lexed[iterate+2][0] == "!=" and lexed[iterate+2][1] == "NOTASSIGNMENT":
 				value, datatype = Opposite(lexed[iterate+3])
@@ -75,12 +75,12 @@ def ConvertVars(lexed):
 			storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
-			lexed[iterate] = [
+			lexed[iterate] = (
 				var[0], 
 				var[1], 
 				var[2], 
 				var[3]
-			]
+			)
 		iterate += 1
 	return lexed
 
