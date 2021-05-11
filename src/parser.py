@@ -19,6 +19,8 @@ outtypes = [
 def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
+	for iterate in range(len(text)):
+		text[iterate] = tuple(text[iterate])
 	if debugmode == True:
 		print(text)
 	for iterate in range(len(text)):
@@ -37,8 +39,6 @@ def Parser(text):
 			#$ Look for the word vent and make sure it has the type of FUNC
 			if text[iterate][0] == "vent":
 				break
-		elif text[iterate][1] == "NUMBER":
-			if 
 		iterate += 1
 
 #* Converts the vars to their values
