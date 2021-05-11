@@ -2,6 +2,13 @@ from src.builtins import *
 from src.errorhandler import Error, ErrorType
 from onoff import debugmode
 
+outtypes = [
+	"STRING", 
+	"NUMBER", 
+	"NONETYPE", 
+	"BOOLEAN"
+]
+
 #-----------------------------------------------------------------|
 #-                                                                |
 #-                           Parser                               |
@@ -18,7 +25,7 @@ def Parser(text):
 		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
 			try:
-				if text[iterate+1][1] == "STRING" and not text[iterate+1][0] == '"' or text[iterate+1][1] == "NUMBER" or text[iterate+1][1] == "NONETYPE":
+				if text[iterate+1][1] in outtypes:
 					if text[iterate][0] == "out":
 						outFUNC(text[iterate+1][0])
 					elif text[iterate][0] == "outln":
@@ -81,6 +88,14 @@ def ConvertVars(lexed):
 def Opposite(text):
 	value = text[0]
 	datatype = text[1]
+	finalvalue = ""
 	if datatype == "STRING":
 		finalvalue = value[::-1]
+	elif datatype == "NUMBER":
+		finalvalue = f"-{value}"
+	elif datatype == "BOOLEAN":
+		finalvalue = value.capitalize()
+		finalvalue = str(not eval(finalvalue)).lower()
+	elif datatype == "NONETYPE":
+		finalvalue = "none"
 	return finalvalue, datatype
