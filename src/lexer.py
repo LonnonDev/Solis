@@ -22,7 +22,7 @@ def Tokenize(text):
 	lastchar = ""
 	line = 1
 	charnumber = 0
-	while iterate != len(text):
+	for iterate in range(len(text)):
 		check = ""
 		for char in text[iterate]:
 			check += char
@@ -85,28 +85,26 @@ def Tokenize(text):
 					check = ""
 			#_ See if the user typed a number and then define it
 			elif char in ValidNumbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
-				if lastchar in ValidNumbers:
+				if check[-2] in ValidNumbers:
 					newchar = Tokenized[-1][0].replace("/N", "")
 					Tokenized[-1] = [f"{newchar+char}/N", line, charnumber]
-					lastchar = char
 				else:
-					lastchar = char
 					Tokenized += [[f"{char}/N", line, charnumber]]
 			charnumber += 1
 		iterate += 1
 	Lexed = Lex(Tokenized)
 	return Lexed
 
-#* This Lexes the Tokenized list to make it understandable for the Parser
+#* This Lexes the Tokenized list to make it understandable to the Parser
 def Lex(Tokenized):
 	iterate = 0
 	Lexed = []
 	iterate = 0
-	while iterate != len(Tokenized):
+	for iterate in range(len(Tokenized)):
 		Tokenized[iterate][0] = Tokenized[iterate][0].replace(" ", "")
 		iterate += 1
 	iterate = 0
-	while iterate != len(Tokenized):
+	for iterate in range(len(Tokenized)):
 		try:
 			if Tokenized[iterate][0] == "var":
 				Lexed += [[
@@ -116,6 +114,7 @@ def Lex(Tokenized):
 					Tokenized[iterate][2]
 				]]
 			else:
+				#print(Tokenized[iterate][0])
 				Lexed += [[
 					Tokenized[iterate][0], 
 					tokensdict[Tokenized[iterate][0]],
