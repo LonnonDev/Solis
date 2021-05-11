@@ -19,9 +19,11 @@ outtypes = [
 def Parser(text):
 	iterate = 0
 	text = ConvertVars(text)
+	for iterate in range(len(text)):
+		text[iterate] = tuple(text[iterate])
 	if debugmode == True:
 		print(text)
-	while iterate != len(text):
+	for iterate in range(len(text)):
 		#$ Look for the word out and make sure it has the type of FUNC
 		if text[iterate][1] == "FUNC":
 			try:
@@ -42,12 +44,10 @@ def Parser(text):
 #* Converts the vars to their values
 def ConvertVars(lexed):
 	storedvars = {}
-	iterate = 0
-	while iterate != len(lexed):
+	for iterate in range(len(lexed)):
 		lexed[iterate][0] = lexed[iterate][0].replace(" ", "")
 		iterate += 1
-	iterate = 0
-	while iterate != len(lexed):
+	for iterate in range(len(lexed)):
 		if not storedvars:
 			storedvars = {}
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
