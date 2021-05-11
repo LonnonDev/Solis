@@ -1,5 +1,5 @@
-from src.tokens import tokens, tokensdict
-numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+from src.tokens import *
+
 
 #* Pairs function from lua
 def pairs(o):
@@ -50,9 +50,8 @@ def Tokenize(text):
 					Tokenized += [[check, line, charnumber]]
 					check = ""
 			elif char in tokens:
-				print(char)
 				#_ This gets the value inside of the of the Quotes
-				if char == '"' and Tokenized[-1][0] == '"':
+				if char == '"' and Tokenized[-1][0].replace(" ", "") == '"':
 					Tokenized.pop(-1)
 					Tokenized += [[f"{check[:-1]}/S", line, charnumber]]
 					check = ""
@@ -82,12 +81,11 @@ def Tokenize(text):
 					Tokenized += [[Final[1], line, charnumber]]
 					check = ""
 				else:
-					print(char)
 					Tokenized += [[char, line, charnumber]]
 					check = ""
 			#_ See if the user typed a number and then define it
-			elif char in numbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
-				if lastchar in numbers:
+			elif char in ValidNumbers and Tokenized[-1][0] != '"' and Tokenized[iterate-1][0] != '"':
+				if lastchar in ValidNumbers:
 					newchar = Tokenized[-1][0].replace("/N", "")
 					Tokenized[-1] = [f"{newchar+char}/N", line, charnumber]
 					lastchar = char
@@ -106,12 +104,11 @@ def Lex(Tokenized):
 	iterate = 0
 	while iterate != len(Tokenized):
 		Tokenized[iterate][0] = Tokenized[iterate][0].replace(" ", "")
-		print(Tokenized[iterate])
 		iterate += 1
-	print(Tokenized)
+	iterate = 0
 	while iterate != len(Tokenized):
 		try:
-			if Tokenized[iterate][0] == "var ":
+			if Tokenized[iterate][0] == "var":
 				Lexed += [[
 					"var",
 					tokensdict["var "],
@@ -138,20 +135,9 @@ def Lex(Tokenized):
 				return Lexed
 			TokenizedEnd = Tokenized[iterate][0][-2:]
 			Final = []
-			if TokenizedEnd == "/S":
-				Final = CreateLexed("STRING")
-			elif TokenizedEnd == "/V":
-				Final = CreateLexed("VAR")
-			elif TokenizedEnd == "/D":
-				Final = CreateLexed("VARNAME")
-			elif TokenizedEnd == "/N":
-				Final = CreateLexed("NUMBER")
-			elif TokenizedEnd == "/C":
-				Final = CreateLexed("COMMENT")
-			elif TokenizedEnd == "/B":
-				Final = CreateLexed("BOOLEAN")
-			elif TokenizedEnd == "/U":
-				Final = CreateLexed("NONETYPE")
+			if TokenizedEnd[1] in TokenizedEndList:
+				DataType = TokenizedEndDict[TokenizedEnd[1]]
+				Final = CreateLexed(DataType)
 			Lexed += Final
 		iterate += 1
 	return Lexed
