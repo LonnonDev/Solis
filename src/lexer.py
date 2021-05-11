@@ -33,7 +33,8 @@ def Tokenize(text):
 					check = ""
 				line += 1
 				charnumber = 0
-			elif check in tokens:
+			elif check.replace(" ", "") in tokens or check in tokens:
+				checkns = check.replace(" ", "")
 				if check == "out":
 					if text[iterate][0:5] == "outln":
 						Tokenized += [["outln", line, charnumber]]
@@ -41,10 +42,15 @@ def Tokenize(text):
 					else:
 						Tokenized += [[check, line, charnumber]]
 						check = ""
+				elif checkns == "true" or checkns == "false":
+					Tokenized += [[f"{check}/B", line, charnumber]]
+				elif checkns == "none":
+					Tokenized += [[f"{check}/U", line, charnumber]]
 				else:
 					Tokenized += [[check, line, charnumber]]
 					check = ""
 			elif char in tokens:
+				print(char)
 				#_ This gets the value inside of the of the Quotes
 				if char == '"' and Tokenized[-1][0] == '"':
 					Tokenized.pop(-1)
@@ -76,6 +82,7 @@ def Tokenize(text):
 					Tokenized += [[Final[1], line, charnumber]]
 					check = ""
 				else:
+					print(char)
 					Tokenized += [[char, line, charnumber]]
 					check = ""
 			#_ See if the user typed a number and then define it
@@ -96,6 +103,12 @@ def Tokenize(text):
 def Lex(Tokenized):
 	iterate = 0
 	Lexed = []
+	iterate = 0
+	while iterate != len(Tokenized):
+		Tokenized[iterate][0] = Tokenized[iterate][0].replace(" ", "")
+		print(Tokenized[iterate])
+		iterate += 1
+	print(Tokenized)
 	while iterate != len(Tokenized):
 		try:
 			if Tokenized[iterate][0] == "var ":
@@ -135,6 +148,10 @@ def Lex(Tokenized):
 				Final = CreateLexed("NUMBER")
 			elif TokenizedEnd == "/C":
 				Final = CreateLexed("COMMENT")
+			elif TokenizedEnd == "/B":
+				Final = CreateLexed("BOOLEAN")
+			elif TokenizedEnd == "/U":
+				Final = CreateLexed("NONETYPE")
 			Lexed += Final
 		iterate += 1
 	return Lexed
