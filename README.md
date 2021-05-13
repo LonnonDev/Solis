@@ -29,6 +29,8 @@ The current types are
   - ```"<data>"```
 - Integer (No Floating Point Value)
   - ```<Any Number without a Decimal```
+- Boolean
+  - ```True or False```
 ## Printing ##
 outln prints with a newline after, takes arg string
 
