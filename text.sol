@@ -1,2 +1,2 @@
-var yourcat = 1 + 2
+var yourcat = 1
 outln |yourcat|
