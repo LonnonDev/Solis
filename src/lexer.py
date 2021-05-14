@@ -63,7 +63,6 @@ def Tokenize(text):
 				#_ Get NotAssignment operator and name of the var
 				elif check.replace(" ", "")[-2:] == "!=":
 					Final = check
-					Final == Final[:-3]
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
@@ -73,7 +72,6 @@ def Tokenize(text):
 				#_ Get Assignment operator and name of the var
 				elif char == "=":
 					Final = check
-					Final == Final[:-3]
 					Final = Final.replace(" ", "")
 					Final = Final.split("=")
 					Final[1] = "="
