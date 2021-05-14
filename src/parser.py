@@ -1,5 +1,6 @@
 from src.builtins import *
 from src.errorhandler import Error, ErrorType
+from src.extras import *
 from onoff import debugmode
 
 outtypes = [
@@ -7,6 +8,14 @@ outtypes = [
 	"NUMBER", 
 	"NONETYPE", 
 	"BOOLEAN"
+]
+
+operations = [
+	"ADD",
+	"SUB",
+	"MUL",
+	"DIV",
+	"MOD"
 ]
 
 #-----------------------------------------------------------------|
@@ -17,6 +26,19 @@ outtypes = [
 
 #* This checks the Lexed code and parses it and runs it
 def Parser(text):
+	iterate = 0
+	while iterate != len(text):
+		try:
+			if text[iterate][1] == "NUMBER":
+				if text[iterate+1][1] in operations and text[iterate+2][1] == "NUMBER":
+					answer = Math(text[iterate], text[iterate+1], text[iterate+2])
+					del text[iterate]
+					del text[iterate]
+					text[iterate][0] = str(answer)
+					iterate = 0
+		except:
+			pass
+		iterate += 1
 	iterate = 0
 	text = ConvertVars(text)
 	for iterate in range(len(text)):
@@ -53,19 +75,19 @@ def ConvertVars(lexed):
 		if lexed[iterate][0] == "var" and lexed[iterate][1] == "DECLARE":
 			def AddVar(value, datatype):
 				try:
-					newdict = {lexed[iterate+1][0]: (
+					newdict = {lexed[iterate+1][0]: [
 						value,
 						datatype,
 						lexed[iterate-1][2],
 						lexed[iterate+3][3]
-					)}
+					]}
 				except:
-					newdict = {lexed[iterate+1][0]: (
+					newdict = {lexed[iterate+1][0]: [
 						'none', 
 						'NONETYPE', 
 						lexed[iterate+1][2], 
 						lexed[iterate+3][3]
-					)}
+					]}
 				return newdict
 			if lexed[iterate+2][0] == "!=" and lexed[iterate+2][1] == "NOTASSIGNMENT":
 				value, datatype = Opposite(lexed[iterate+3])
@@ -75,27 +97,15 @@ def ConvertVars(lexed):
 			storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
-			lexed[iterate] = (
+			lexed[iterate] = [
 				var[0], 
 				var[1], 
 				var[2], 
 				var[3]
-			)
+			]
 		iterate += 1
 	return lexed
 
-#* Gets opposite of an input
-def Opposite(text):
-	value = text[0]
-	datatype = text[1]
-	finalvalue = ""
-	if datatype == "STRING":
-		finalvalue = value[::-1]
-	elif datatype == "NUMBER":
-		finalvalue = f"-{value}"
-	elif datatype == "BOOLEAN":
-		finalvalue = value.capitalize()
-		finalvalue = str(not eval(finalvalue)).lower()
-	elif datatype == "NONETYPE":
-		finalvalue = "none"
-	return finalvalue, datatype
+def Math(first, operation, second):
+	final = eval("1 + 1")
+	return final
