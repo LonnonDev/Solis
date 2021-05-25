@@ -1,6 +1,7 @@
 from src.builtins import *
 from src.errorhandler import Error, ErrorType
 from src.extras import *
+from src.tokens import ValidNumbers
 from onoff import debugmode
 
 outtypes = [
@@ -26,19 +27,6 @@ operations = [
 
 #* This checks the Lexed code and parses it and runs it
 def Parser(text):
-	iterate = 0
-	while iterate != len(text):
-		try:
-			if text[iterate][1] == "NUMBER":
-				if text[iterate+1][1] in operations and text[iterate+2][1] == "NUMBER":
-					answer = Math(text[iterate], text[iterate+1], text[iterate+2])
-					del text[iterate]
-					del text[iterate]
-					text[iterate][0] = str(answer)
-					iterate = 0
-		except:
-			pass
-		iterate += 1
 	iterate = 0
 	text = ConvertVars(text)
 	for iterate in range(len(text)):
@@ -68,7 +56,17 @@ def ConvertVars(lexed):
 	storedvars = {}
 	for iterate in range(len(lexed)):
 		lexed[iterate][0] = lexed[iterate][0].replace(" ", "")
-		iterate += 1
+	lexed, storedvars = ChangeVars(lexed, storedvars)
+	if debugmode == True:
+		print(storedvars)
+	return lexed
+
+def Math(input):
+	final = eval(input)
+	return str(final)
+
+
+def ChangeVars(lexed, storedvars):
 	for iterate in range(len(lexed)):
 		if not storedvars:
 			storedvars = {}
@@ -83,9 +81,9 @@ def ConvertVars(lexed):
 					]}
 				except:
 					newdict = {lexed[iterate+1][0]: [
-						'none', 
-						'NONETYPE', 
-						lexed[iterate+1][2], 
+						'none',
+						'NONETYPE',
+						lexed[iterate+1][2],
 						lexed[iterate+3][3]
 					]}
 				return newdict
@@ -93,19 +91,40 @@ def ConvertVars(lexed):
 				value, datatype = Opposite(lexed[iterate+3])
 				newdict = AddVar(value, datatype)
 			else:
-				newdict = AddVar(lexed[iterate+3][0], lexed[iterate+3][1])
-			storedvars = {**storedvars, **newdict}
+				#$ Checks if it has to do math
+				mathoutput = ""
+				if lexed[iterate+3][0] in ValidNumbers:
+					vartime = False
+					onemore = False
+					origname = lexed[iterate+1]
+					mathinput = ""
+					for variterate in lexed:
+						if vartime:
+							if variterate[1] not in operations and variterate[0] not in ValidNumbers:
+								vartime = False
+							else:
+								mathinput += variterate[0]
+						else:
+							if origname[0] == variterate[0] and variterate[1] == "VARNAME":
+								onemore = True
+							elif onemore == True:
+								vartime = True
+								onemore = False
+					mathoutput = Math(mathinput)
+				if mathoutput == "":
+					newdict = AddVar(lexed[iterate+3][0], lexed[iterate+3][1])
+				else:
+					
+					newdict = AddVar(mathoutput, lexed[iterate+3][1])
+					
+				storedvars = {**storedvars, **newdict}
 		elif lexed[iterate][1] == "VAR":
 			var = storedvars[lexed[iterate][0]]
 			lexed[iterate] = [
-				var[0], 
-				var[1], 
-				var[2], 
+				var[0],
+				var[1],
+				var[2],
 				var[3]
 			]
-		iterate += 1
-	return lexed
-
-def Math(first, operation, second):
-	final = eval("1 + 1")
-	return final
+		
+	return lexed, storedvars
