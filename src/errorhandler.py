@@ -23,7 +23,7 @@ def GetFileName():
 #* Class containing ErrorType, and maybe file and line if needed
 class Error(): 
 	#* Initializer, takes ErrorType and optionally file and line
-	def __init__(self,err,line=None,file=None): 
+	def __init__(self, err, line=None, file=None): 
 		#$ If err is of type ErrorType, set initializer values, otherwise, raise a TypeError.
 		if isinstance(err,ErrorType):
 			#_ Set fields equal to initializer values
